@@ -1,0 +1,9 @@
+<?php
+
+use App\Http\Controllers\ProduitController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::apiResource('api/produits',ProduitController::class);
