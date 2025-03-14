@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('produits', function (Blueprint $table) {
             $table->string('image')->nullable()->after('prix');
-
         });
     }
 

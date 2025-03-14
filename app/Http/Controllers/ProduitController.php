@@ -12,7 +12,7 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        return response()->json(Produit::all(),200);
+        return response()->json(Produit::all(), 200);
     }
 
     /**
@@ -20,9 +20,19 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        $produit=Produit::create($request->all(),201);
-        return response()->json($produit, 201);
 
+        if ($request->hasFile('image')) {
+            $imagePath =    $request->file('image')->store('nosImages', 'public');
+        } else {
+            $imagePath = "";
+        }
+
+        $data = $request->all();
+        $data['image'] = $imagePath;
+
+
+        $produit = Produit::create($data, 201);
+        return response()->json($produit, 201);
     }
 
     /**
@@ -30,9 +40,9 @@ class ProduitController extends Controller
      */
     public function show(string $id)
     {
-        $produit=Produit::find($id);
-        if(!$produit)  return response()->json(['message'=>'produit introuvable'],404);
-        return response()->json($produit,200);
+        $produit = Produit::find($id);
+        if (!$produit)  return response()->json(['message' => 'produit introuvable'], 404);
+        return response()->json($produit, 200);
     }
 
     /**
@@ -40,10 +50,10 @@ class ProduitController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $produit=Produit::find($id);
-        if(!$produit)  return response()->json(['message'=>'produit introuvable'],404);
+        $produit = Produit::find($id);
+        if (!$produit)  return response()->json(['message' => 'produit introuvable'], 404);
         $produit->update($request->all());
-        return response()->json($produit,200);
+        return response()->json($produit, 200);
     }
 
     /**
@@ -51,9 +61,9 @@ class ProduitController extends Controller
      */
     public function destroy(string $id)
     {
-        $produit=Produit::find($id);
-        if(!$produit)  return response()->json(['message'=>'produit introuvable'],404);
+        $produit = Produit::find($id);
+        if (!$produit)  return response()->json(['message' => 'produit introuvable'], 404);
         $produit->delete();
-        return response()->json($produit,200);
+        return response()->json($produit, 200);
     }
 }

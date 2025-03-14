@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('libelle');
             $table->decimal('prix',8,2);
+            // $table->string('image',255);
+
             $table->timestamps();
         });
     }
